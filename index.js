@@ -10,12 +10,12 @@ const cors = require("cors");
 
 const app = express();
 
-async function connectingDb() {
+async function connectingDB() {
   try {
     await mongoose.connect(process.env.DB_CONNECTION);
     console.log("connected to DB..");
   } catch (error) {
-    console.log(`Error occured: ${error.message}`);
+    console.log(`Error occurred: ${error.message}`);
   }
 }
 connectingDb();
@@ -23,6 +23,10 @@ connectingDb();
 app.use(express.json());
 app.use(cookieParser("secretCOoki@"));
 app.use(cors());
+
+app.get('/',(req,res)=>{
+  res.send("hello world")
+})
 
 app.post("/api/register", async (req, res) => {
   const { username, password } = req.body;
@@ -52,7 +56,7 @@ app.post("/api/register", async (req, res) => {
     res.status(200).json({ message: "registered success" });
   } catch (error) {
     console.log(error.message);
-    res.status(400).json({ message: "error occured while registering" });
+    res.status(400).json({ message: "error occurred while registering" });
   }
 });
 
